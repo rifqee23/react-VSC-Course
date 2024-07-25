@@ -2,7 +2,7 @@ const Button = (props) => {
   const { warna = "bg-black", children = "...", type = "button" } = props;
   return (
     <button
-      className={`h-10 px-6 mt-2 font-semibold w-full rounded-md ${warna} text-white`}
+      className={`h-10 px-6 mt-2 font-semibold rounded-md ${warna} text-white`}
       type={type}
     >
       {children}
