@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 const AuthLayouts = (props) => {
-  const { children, title } = props;
+  const { children, title, type } = props;
   return (
     <>
       <div className="flex justify-center min-h-screen items-center">
@@ -10,6 +12,18 @@ const AuthLayouts = (props) => {
           </h3>
 
           {children}
+          <p className="mt-2">
+            {type === "login"
+              ? "Don't have an Account? "
+              : "Already have an Account? "}
+
+            <Link
+              className="text-blue-600 font-semibold hover:underline-offset-4  hover:underline"
+              to={type === "login" ? "/register" : "/login"}
+            >
+              {type === "login" ? "Register" : "Login"}
+            </Link>
+          </p>
         </div>
       </div>
     </>
