@@ -40,7 +40,7 @@ const Body = (props) => {
 };
 
 const Footer = (props) => {
-  const { price, children, handleAddToCart, id } = props;
+  const { price, children, AddToCart, id } = props;
   return (
     <div className="flex items-center justify-between px-4 pb-4">
       <span className="text-xl font-bold text-white">
@@ -49,7 +49,7 @@ const Footer = (props) => {
           currency: "IDR",
         })}
       </span>
-      <Button warna={"bg-blue-500"} onClick={() => handleAddToCart(id)}>
+      <Button warna={"bg-blue-500"} onClick={() => AddToCart(id)}>
         {children}
       </Button>
     </div>

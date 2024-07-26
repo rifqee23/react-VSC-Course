@@ -1,6 +1,6 @@
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const products = [
   {
@@ -41,12 +41,23 @@ const products = [
 const uName = localStorage.getItem("username");
 
 const ProductPages = () => {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      qty: 1,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem("cart")) || []);
+  }, []);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      const sum = cart.reduce((acc, item) => {
+        const product = products.find((product) => product.id === item.id);
+        return acc + product.price * item.qty;
+      }, 0);
+      setTotalPrice(sum);
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
 
   const handleLogout = () => {
     localStorage.removeItem("username");
@@ -58,11 +69,13 @@ const ProductPages = () => {
   const handleAddToCart = (id) => {
     if (cart.find((item) => item.id === id)) {
       setCart(
-        cart.map((item) =>
-          item.id === id ? { ...item, qty: item.qty + 1 } : item
-        )
+        cart.map((item) => {
+          return item.id === id ? { ...item, qty: item.qty + 1 } : item;
+        })
       );
     } else {
+      console.log(id);
+
       setCart([
         ...cart,
         {
@@ -90,7 +103,7 @@ const ProductPages = () => {
               <CardProduct.Footer
                 price={product.price}
                 id={product.id}
-                handleAddToCart={handleAddToCart}
+                AddToCart={handleAddToCart}
               >
                 Add to chart
               </CardProduct.Footer>
@@ -138,6 +151,17 @@ const ProductPages = () => {
                   </tr>
                 );
               })}
+              <tr>
+                <td className="ps-4 font-bold" colSpan={3}>
+                  Total Price
+                </td>
+                <td>
+                  {totalPrice.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
