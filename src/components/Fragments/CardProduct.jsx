@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../Elements/Button";
 
 const CardProduct = (props) => {
@@ -10,17 +11,16 @@ const CardProduct = (props) => {
 };
 
 const Header = (props) => {
-  const { image } = props;
+  const { image, id } = props;
   return (
     <>
-      <a href="#" className="flex justify-center">
+      <Link to={`/product/${id}`} className="flex justify-center px-4">
         <img
           src={image}
           alt="product"
-          className="py-4 rounded-t-lg"
-          width={150}
+          className="py-4 h-60 w-full rounded-t-lg"
         />
-      </a>
+      </Link>
     </>
   );
 };
@@ -30,17 +30,17 @@ const Body = (props) => {
   return (
     <div className="px-5 h-full">
       <a href="#">
-        <h5 className="text-xl font-semibold tracking-tight text-white">
-          {title}
+        <h5 className="text-xl font-semibold tracking-tight text-white mb-5">
+          {title.substring(0, 20)}...
         </h5>
-        <p className="text-white">{children}</p>
+        <p className="text-white">{children.substring(0, 100)}...</p>
       </a>
     </div>
   );
 };
 
 const Footer = (props) => {
-  const { price, children, handleAddToCart, id } = props;
+  const { price, children, AddToCart, id } = props;
   return (
     <div className="flex items-center justify-between px-4 pb-4">
       <span className="text-xl font-bold text-white">
@@ -49,7 +49,7 @@ const Footer = (props) => {
           currency: "IDR",
         })}
       </span>
-      <Button warna={"bg-blue-500"} onClick={() => handleAddToCart(id)}>
+      <Button warna={"bg-blue-500"} onClick={() => AddToCart(id)}>
         {children}
       </Button>
     </div>
