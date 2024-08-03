@@ -1,45 +1,5 @@
 import CardProduct from "../components/Fragments/CardProduct";
 import Button from "../components/Elements/Button";
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-
-const products = [
-  {
-    id: 1,
-    image:
-      "/images/beautiful-blonde-girl-white-oversized-tshirt-blue-jeans-posing-gray-background.jpg",
-    name: "Baju Wanita",
-    price: 100000,
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet
-          inventore natus, aliquid dicta obcaecati repudiandae consectetur
-          aliquam cupiditate repellendus odio nisi perferendis quas? Reiciendis
-          quasi fugit explicabo, beatae ullam corrupti!`,
-  },
-  {
-    id: 2,
-    image: "/images/teenage-boy-white-tee-basic-youth-apparel-shoot.jpg",
-    name: "Baju Pria",
-    price: 80000,
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. `,
-  },
-  {
-    id: 3,
-    image: "/images/teenage-boy-white-tee-basic-youth-apparel-shoot.jpg",
-    name: "Baju Pria2",
-    price: 90000,
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. `,
-  },
-  {
-    id: 4,
-    image:
-      "/images/beautiful-blonde-girl-white-oversized-tshirt-blue-jeans-posing-gray-background.jpg",
-    name: "Baju Wanita22",
-    price: 120000,
-    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. `,
-  },
-];
-
-const uName = localStorage.getItem("username");
 import { useEffect, useRef, useState } from "react";
 import { getProducts } from "../services/product.service";
 import { useLogin } from "../hooks/useLogin";
@@ -55,12 +15,10 @@ const ProductPages = () => {
   }, []);
 
   useEffect(() => {
-    if (cart.length > 0) {
-      getProducts((data) => {
-        setProducts(data);
-      });
-    }
-  },[]);
+    getProducts((data) => {
+      setProducts(data);
+    });
+  }, []);
 
   useEffect(() => {
     if (products.length > 0 && cart.length > 0) {
@@ -71,8 +29,7 @@ const ProductPages = () => {
       setTotalPrice(sum);
       localStorage.setItem("cart", JSON.stringify(cart));
     }
-  }, [cart]);
-
+  }, [cart, products]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -117,21 +74,6 @@ const ProductPages = () => {
       </div>
       <div className="flex justify-center py-5 gap-8">
         <div className="w-3/4 flex flex-wrap gap-8 px-8">
-          {products.map((product) => (
-            <CardProduct key={product.id}>
-              <CardProduct.Header image={product.image} />
-              <CardProduct.Body title={product.name}>
-                {product.description}
-              </CardProduct.Body>
-              <CardProduct.Footer
-                price={product.price}
-                id={product.id}
-                AddToCart={handleAddToCart}
-              >
-                Add to chart
-              </CardProduct.Footer>
-            </CardProduct>
-          ))}
           {products.length > 0 &&
             products.map((product) => (
               <CardProduct key={product.id}>
@@ -163,30 +105,6 @@ const ProductPages = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((item) => {
-                const product = products.find(
-                  (product) => product.id === item.id
-                );
-                return (
-                  <tr key={item.id}>
-                    <td>{product.name}</td>
-                    <td className="text-center">
-                      {product.price.toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })}
-                    </td>
-                    <td className="text-center">{item.qty}</td>
-                    <td className="text-center">
-                      {(product.price * item.qty).toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                      })}
-                    </td>
-                  </tr>
-                );
-              })}
-
               {products.length > 0 &&
                 cart.map((item, index) => {
                   const product = products.find(
@@ -218,8 +136,6 @@ const ProductPages = () => {
                 <td>
                   {totalPrice.toLocaleString("id-ID", {
                     style: "currency",
-                    currency: "IDR",
-
                     currency: "USD",
                   })}
                 </td>
