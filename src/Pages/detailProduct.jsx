@@ -21,7 +21,12 @@ function DetailProductPage() {
         className="w-full h-48 object-cover mb-4 rounded-lg"
       />
       <p className="text-gray-700 mb-4">{product?.description}</p>
-      <h2 className="text-xl font-semibold mb-4">${product?.price}</h2>
+      <h2 className="text-xl font-semibold mb-4">
+        {[product?.price].toLocaleString("en-En", {
+          style: "currency",
+          currency: "USD",
+        })}
+      </h2>
       <button
         onClick={() => handleAddToCart(product?.id)}
         className="px-4 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600"
